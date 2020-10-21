@@ -1,16 +1,23 @@
 package lab_01;
 
+import jdk.dynalink.beans.StaticClass;
+
 import java.util.Vector;
 
 public class Counter{
     public static int c;
+    private static final BinSemaphore bin_sem = new BinSemaphore();
 
     public static void inc(){
+        bin_sem.get_sem();
         c++;
+        bin_sem.signal_sem();
     }
 
     public static void dec(){
+        bin_sem.get_sem();
         c--;
+        bin_sem.signal_sem();
     }
 
     public void go() throws InterruptedException{
