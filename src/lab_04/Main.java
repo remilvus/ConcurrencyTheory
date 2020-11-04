@@ -20,10 +20,10 @@ public class Main {
         Buffer chocolate_storage = new Buffer(capacity);
 
         for(int i=0; i < producers; i++){
-            chocolate_factories.add(new Producer(chocolate_storage));
+            chocolate_factories.add(new Producer(chocolate_storage, 1));
         }
         for(int i=0; i < consumers; i++){
-            people.add(new Consumer(chocolate_storage));
+            people.add(new Consumer(chocolate_storage, (1 + i) * 5));
         }
 
         chocolate_factories.forEach(Thread::start);

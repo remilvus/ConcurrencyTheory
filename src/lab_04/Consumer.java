@@ -3,10 +3,11 @@ package lab_04;
 public class Consumer extends Thread{
     Buffer buf;
     int value;
-    int k = 3;
+    int k;
 
-    public Consumer(Buffer buf){
+    public Consumer(Buffer buf, int need){
         this.buf = buf;
+        k = need;
     }
 
 
@@ -24,7 +25,7 @@ public class Consumer extends Thread{
         while(true){
             do_stuff();
             value = buf.consume(k);
-            System.out.println("Consumed: " + value);
+//            System.out.println("Consumed: " + value);
         }
     }
 }

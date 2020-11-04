@@ -22,12 +22,12 @@ public class Buffer {
 
     public int consume(int k){
         int element = -1;
-        System.out.println("tries to consume " + k);
+
         buffer_lock.lock();
         try {
             while ((first_full == next_empty && count == 0) || count < k) {
                 try {
-                    System.out.println("consumer awaits");
+                    System.out.println("consumer awaits (needs " + k + ")");
                     producer_condition.signal();
                     consumer_condition.await();
                 } catch (InterruptedException e) {
@@ -47,19 +47,21 @@ public class Buffer {
             buffer_lock.unlock();
         }
 
+        System.out.println("consumer consumed " + k + " products");
+
         return element;
     }
 
     public void produce(int element, int k){
 
-        System.out.println("tries to produce " + k);
+//        System.out.println("tries to produce " + k);
         buffer_lock.lock();
 
         try {
             while((next_empty == first_full && count != 0) ||
                     (size - count) < k){
                     try {
-                        System.out.println("producer awaits");
+//                        System.out.println("producer awaits");
                         consumer_condition.signal();
                         producer_condition.await();
                     } catch (InterruptedException e) {

@@ -3,9 +3,11 @@ package lab_04;
 public class Producer extends Thread{
     Buffer buf;
     int value = 0;
-    int k = 10;
-    public Producer(Buffer buf){
+    int k;
+
+    public Producer(Buffer buf, int output){
         this.buf = buf;
+        k = output;
     }
 
     private void do_stuff(){
