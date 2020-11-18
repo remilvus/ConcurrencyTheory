@@ -14,12 +14,6 @@ public class Main {
 
         Monitor chocolate_storage = new Monitor(capacity);
 
-        // arykuł: co we wzorcu jest wątkiem? ile jest wątków?
-        //
-        // następne laby 2 tygodnie; pod koniec:
-        // kod na ocenę
-        // testy na ocenę
-
         for(int i=0; i < producers; i++){
             chocolate_factories.add(new Producer(chocolate_storage, 1, i));
         }
