@@ -32,4 +32,9 @@ public class MethodRequestPut extends MethodRequest {
         buffer.put(values);
         result_container.set(null);
     }
+
+    @Override
+    public String toString() {
+        return "P+" + id;
+    }
 }

@@ -7,9 +7,9 @@ import java.util.Vector;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-        int capacity = 100;
-        int producers = 2;
-        int consumers = 2;
+        int capacity = 20;
+        int producers = 5;
+        int consumers = 10;
         int producer_output = -1;
         int consumer_need = -1;
 

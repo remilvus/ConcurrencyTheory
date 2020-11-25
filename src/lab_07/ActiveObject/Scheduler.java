@@ -8,10 +8,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class Scheduler extends Thread{
     private Queue<IMethodRequest> general_queue;
     private Queue<IMethodRequest> priority_queue;
+    Buffer buffer; // used only for logs
 
-    public Scheduler(){
+    public Scheduler(Buffer buffer){
         general_queue = new ConcurrentLinkedQueue<>();
         priority_queue = new ConcurrentLinkedQueue<>();
+        this.buffer = buffer;
     }
 
     public void enqueue(IMethodRequest request){
@@ -20,6 +22,12 @@ public class Scheduler extends Thread{
 
     public void logComplete(IMethodRequest request){
         System.out.println("Servant completed request from " + request.get_id());
+        System.out.println("Buffer state: " + buffer.size() + " / " + buffer.MAX_SIZE + "\n");
+    }
+
+    public void logQueues(String msg){
+        System.out.println(msg + "General: " + general_queue.toString());
+        System.out.println(msg + "Priority:" + priority_queue.toString());
     }
     
     @Override
@@ -35,6 +43,8 @@ public class Scheduler extends Thread{
                 } else break;
             }
 
+            logQueues("1.");
+
             if(! general_queue.isEmpty()){
                 IMethodRequest request = general_queue.remove();
 
@@ -46,6 +56,13 @@ public class Scheduler extends Thread{
                     priority_queue.add(request);
                 }
             }
+
+            logQueues("2.");
+
+            // loops for better logging
+            while(general_queue.isEmpty() && ((! priority_queue.isEmpty()) && (! priority_queue.peek().canExecute()) )){}
+            while(general_queue.isEmpty() && priority_queue.isEmpty()){}
+
         }
     }
 

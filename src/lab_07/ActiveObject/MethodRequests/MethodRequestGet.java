@@ -33,5 +33,10 @@ public class MethodRequestGet extends MethodRequest {
         List<Integer> result = buffer.get(how_many); // get result
         result_container.set(result); // return by future
     }
+
+    @Override
+    public String toString() {
+        return "C" + id;
+    }
 }
 

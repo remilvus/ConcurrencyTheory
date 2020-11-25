@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Future {
 
-    private boolean is_set = false;
+    private volatile boolean is_set = false;
     private volatile List<Integer> value = null;
 
     public boolean isReady(){

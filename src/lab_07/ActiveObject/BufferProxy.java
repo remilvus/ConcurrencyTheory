@@ -7,12 +7,13 @@ import java.util.List;
 
 public class BufferProxy {
     private Buffer buffer;
-    private Scheduler scheduler = new Scheduler();
+    private Scheduler scheduler;
     public final int buffer_size;
 
     public BufferProxy(int capacity){
         buffer = new Buffer(capacity);
         buffer_size = capacity;
+        scheduler = new Scheduler(buffer);
         scheduler.start();
     }
 
