@@ -67,10 +67,10 @@ public class Producer extends Thread{
         // create initial put requests
         for(int i=0; i < MAX_REQUESTS; i++){
             request_status[i] = buffer_proxy.put(output, id);
-            output = getOutput(); 
+            output = getOutput();
+            doStuff();
         }
 
-//        for(int i = 0; i < 100; i++){
         while(true){
             for(int i=0; i < MAX_REQUESTS; i++){
                 if(request_status[i].isReady()){

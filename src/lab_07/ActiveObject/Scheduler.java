@@ -48,7 +48,7 @@ public class Scheduler extends Thread{
             if(! general_queue.isEmpty()){
                 IMethodRequest request = general_queue.remove();
 
-                if(request.canExecute()){
+                if(request.canExecute() && ! isClassInPriority(request)){
                     request.execute();
                     logComplete(request);
                 } else {
@@ -64,6 +64,11 @@ public class Scheduler extends Thread{
             while(general_queue.isEmpty() && priority_queue.isEmpty()){}
 
         }
+    }
+
+    private boolean isClassInPriority(IMethodRequest request){
+        if (priority_queue.isEmpty()) return false;
+        return priority_queue.peek().getClass() == request.getClass();
     }
 
     private void isCorrectType(IMethodRequest request) {
