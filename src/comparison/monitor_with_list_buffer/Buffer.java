@@ -52,13 +52,13 @@ public class Buffer {
 
             for (int i = 0; i < how_many; i++) {
                 result.add(buffer.remove());
-                Thread.sleep(wait_time);
+            }
+            for (int j = 0; j < wait_time; j++) {
+                Math.sin(21.37);
             }
 
             producer_first.signal();
             consumer_rest.signal();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } finally {
             buffer_lock.unlock();
         }
@@ -107,10 +107,13 @@ public class Buffer {
             int size = emelents.size();
             for (int i = 0; i < size; i++) {
                 buffer.add(emelents.remove(0));
-                try {
-                    Thread.sleep(wait_time);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+//                try {
+//                    Thread.sleep(wait_time);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                for (int j = 0; j < wait_time; j++) {
+                    Math.sin(21.37);
                 }
             }
         }

@@ -24,11 +24,9 @@ public class Buffer {
             int size = values.size();
             for (int i = 0; i < size; i++) {
                 buffer.add(values.remove(0));
-                try {
-                    Thread.sleep(wait_time);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            }
+            for (int j = 0; j < wait_time; j++) {
+                Math.sin(21.37);
             }
         }
     }
@@ -40,10 +38,13 @@ public class Buffer {
 
         for (int i = 0; i < how_many; i++) {
             result.add(buffer.remove());
-            try {
-                Thread.sleep(wait_time);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+//            try {
+//                Thread.sleep(wait_time);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            for (int j = 0; j < wait_time; j++) {
+                Math.sin(21.37);
             }
         }
 

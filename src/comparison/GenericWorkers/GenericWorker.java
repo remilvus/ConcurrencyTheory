@@ -21,10 +21,13 @@ public abstract class GenericWorker extends Thread {
     protected void doTask() {
         if (task_count == 0) return;
 
-        try {
-            sleep(task_size);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+//        try {
+//            sleep(task_size);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        for (int i = 0; i < task_size; i++) {
+            Math.sin(21.37);
         }
         task_count--;
     }

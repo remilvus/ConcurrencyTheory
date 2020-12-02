@@ -5,11 +5,15 @@ import comparison.AO_version.ActiveObject.MethodRequests.IMethodRequest;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Scheduler extends Thread{
     private Queue<IMethodRequest> general_queue;
     private Queue<IMethodRequest> priority_queue;
     Buffer buffer; // used only for logs
+    ReentrantLock lock = new ReentrantLock();
+    Condition general_cond = lock.newCondition();
 
     public Scheduler(Buffer buffer){
         general_queue = new ConcurrentLinkedQueue<>();
@@ -18,7 +22,13 @@ public class Scheduler extends Thread{
     }
 
     public void enqueue(IMethodRequest request){
-        general_queue.add(request);
+        lock.lock();
+        try {
+            general_queue.add(request);
+            general_cond.signal();
+        } finally {
+            lock.unlock();
+        }
     }
 
 
@@ -34,6 +44,8 @@ public class Scheduler extends Thread{
                 } else break;
             }
 
+            waitForGeneral();
+
             if(! general_queue.isEmpty()){
                 IMethodRequest request = general_queue.remove();
                 if(request instanceof EndRequest) return;
@@ -46,6 +58,24 @@ public class Scheduler extends Thread{
                 }
             }
 
+        }
+    }
+
+    private void waitForGeneral(){
+        // waits on condition until general_queue is not empty
+        if(general_queue.isEmpty()){
+            lock.lock();
+            try{
+                while(general_queue.isEmpty()) {
+                    try {
+                        general_cond.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }finally {
+                lock.unlock();
+            }
         }
     }
 
