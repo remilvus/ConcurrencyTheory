@@ -2,3 +2,8 @@
 shelf/
 workspace.xml
 out/
+*.class
+build/
+.gradle/
+gradle/
+resources/
